@@ -84,6 +84,7 @@ RUN echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-s
 RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
 RUN (while true ; do sleep 5; echo y; done) | apt-get install oracle-java8-installer -y
 RUN (while true ; do sleep 5; echo y; done) | android update sdk --no-ui --force --all --filter android-26,build-tools-26.0.1
+RUN (while sleep 3; do echo "y"; done) | $ANDROID_HOME/tools/android update sdk -u
 USER $USERNAME
 # Set workdir
 # You'll need to run this image with a volume mapped to /home/dev (i.e. -v $(pwd):/home/dev) or override this value
