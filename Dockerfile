@@ -83,7 +83,7 @@ RUN apt-get update
 RUN echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
 RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
 RUN (while true ; do sleep 5; echo y; done) | apt-get install oracle-java8-installer -y
-RUN (while true ; do sleep 5; echo y; done) | android update sdk --no-ui --force --all --filter android-26,build-tools-26.0.1,platform-tools
+RUN (while true ; do sleep 5; echo y; done) | android update sdk --no-ui --force --all --filter android-26,build-tools-26.0.1
 RUN (while true ; do sleep 5; echo y; done) | android update sdk --no-ui --force --all --filter android-25,build-tools-25.0.2
 USER $USERNAME
 # Set workdir
