@@ -1,6 +1,6 @@
 # Docker image for react native.
 
-FROM node:8.5
+FROM node:12
 
 MAINTAINER Maxime Demolin <akbarova.armia@gmail.com>
 
@@ -38,13 +38,13 @@ RUN cd /usr/local && \
 
 # Install android tools and system-image.
 ENV PATH $PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/23.0.1
-RUN (while true ; do sleep 5; echo y; done) | android update sdk --no-ui --force --all --filter platform-tools,android-23,build-tools-23.0.1,extra-android-support,extra-android-m2repository,sys-img-x86_64-android-23,extra-google-m2repository
+RUN (while true ; do sleep 5; echo y; done) | android update sdk --no-ui --force --all --filter platform-tools,android-28,build-tools-28.0.3,extra-android-support,extra-android-m2repository,sys-img-x86_64-android-23,extra-google-m2repository
 
 
 # Install node modules
 
 ## Install yarn
-RUN npm install -g yarn
+#RUN npm install -g yarn
 
 ## Install react native
 RUN npm install -g react-native-cli@1.0.0
@@ -82,9 +82,17 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
 RUN apt-get update
 RUN echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
 RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
-RUN (while true ; do sleep 5; echo y; done) | apt-get install oracle-java8-installer -y
+#RUN (while true ; do sleep 5; echo y; done) | apt-get install oracle-java8-installer -y
 RUN (while true ; do sleep 5; echo y; done) | android update sdk --no-ui --force --all --filter android-26,build-tools-26.0.1
 RUN (while true ; do sleep 5; echo y; done) | android update sdk --no-ui --force --all --filter android-25,build-tools-25.0.2
+RUN (while true ; do sleep 5; echo y; done) | android update sdk --no-ui --force --all --filter android-29,build-tools-29
+RUN chown -R root:root /usr/local/android-sdk-linux
+RUN chmod -R 777 /usr/local/android-sdk-linux
+# Fucking android...don't ask me.
+RUN rm -rf /usr/local/android-sdk-linux/platforms/android-28
+RUN rm -rf /usr/local/android-sdk-linux/build-tools/28.0.3
+RUN (while true ; do sleep 5; echo y; done) | android update sdk --no-ui --force --all --filter android-28,build-tools-28.0.3
+COPY adb /usr/local/android-sdk-linux/platform-tools/
 USER $USERNAME
 # Set workdir
 # You'll need to run this image with a volume mapped to /home/dev (i.e. -v $(pwd):/home/dev) or override this value
