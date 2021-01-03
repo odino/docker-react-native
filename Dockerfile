@@ -89,9 +89,8 @@ RUN (while true ; do sleep 5; echo y; done) | android update sdk --no-ui --force
 RUN chown -R root:root /usr/local/android-sdk-linux
 RUN chmod -R 777 /usr/local/android-sdk-linux
 # Fucking android...don't ask me.
-RUN rm -rf /usr/local/android-sdk-linux/platforms/android-28
-RUN rm -rf /usr/local/android-sdk-linux/build-tools/28.0.3
-RUN (while true ; do sleep 5; echo y; done) | android update sdk --no-ui --force --all --filter android-28,build-tools-28.0.3
+RUN rm -rf /usr/local/android-sdk-linux/platforms/android-29
+RUN (while true ; do sleep 5; echo y; done) | android update sdk --no-ui --force --all --filter android-29,build-tools-29.0.3,platform-tools-29.0.3
 COPY adb /usr/local/android-sdk-linux/platform-tools/
 USER $USERNAME
 # Set workdir
